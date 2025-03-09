@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATRAPASUEÑOS - Disponibilidad</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-image: url('/api/placeholder/1920/1080');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 30px 10px;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+
+        .container {
+            text-align: center;
+            color: white;
+            max-width: 900px;
+            width: 100%;
+            padding: 40px 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        .legend-available {
+            background-color: #4CAF50;
+        }
+
+        .legend-unavailable {
+            background-color: #F44336;
+        }
+
+        .legend-selected {
+            background-color: #2196F3;
+        }
+
+        .floors {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .floor {
+            padding: 20px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .floor-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .rooms {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .room-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            border: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: #4CAF50;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .room-btn:hover:not(.unavailable) {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+            background-color: #2E7D32;
+        }
+
+        .room-btn.unavailable {
+            background-color: #F44336;
+            cursor: not-allowed;
+        }
+
+        /*.room-btn.selected {  Eliminado para que no haya estilo especial para "seleccionado"
+            background-color: #2196F3;
+            outline: 3px solid white;
+        }*/
+
+        .info-panel {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            text-align: left;
+            display: none;
+        }
+
+        .info-panel.active {
+            display: block;
+        }
+
+        .info-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #2196F3;
+        }
+
+        .action-btn {
+            margin-top: 30px;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            transition: all 0.3s ease;
+            display: none;
+        }
+
+        .action-btn.active {
+            display: inline-block;
+        }
+
+        .action-btn:hover {
+            background-color: #0D47A1;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .room-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ATRAPASUEÑOS</h1>
+        <h2>Disponibilidad</h2>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color legend-available"></div>
+                <span>Disponible</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color legend-unavailable"></div>
+                <span>No Disponible</span>
+            </div>
+            <!-- Eliminado ya que no hay estilo "seleccionado"
+            <div class="legend-item">
+                <div class="legend-color legend-selected"></div>
+                <span>Seleccionada</span>
+            </div>
+            -->
+        </div>
+
+        <div class="floors">
+            <div class="floor">
+                <h3 class="floor-title">Primer Piso</h3>
+                <div class="rooms">
+                    <button class="room-btn" data-room="1">1</button>
+                    <button class="room-btn" data-room="2">2</button>
+                    <button class="room-btn" data-room="3">3</button>
+                    <button class="room-btn" data-room="4">4</button>
+                    <button class="room-btn" data-room="5">5</button>
+                </div>
+            </div>
+
+            <div class="floor">
+                <h3 class="floor-title">Segundo Piso</h3>
+                <div class="rooms">
+                    <button class="room-btn" data-room="6">6</button>
+                    <button class="room-btn" data-room="7">7</button>
+                    <button class="room-btn" data-room="8">8</button>
+                    <button class="room-btn" data-room="9">9</button>
+                    <button class="room-btn" data-room="10">10</button>
+                    <button class="room-btn" data-room="11">11</button>
+                    <button class="room-btn" data-room="12">12</button>
+                    <button class="room-btn" data-room="13">13</button>
+                </div>
+            </div>
+
+            <div class="floor">
+                <h3 class="floor-title">Tercer Piso</h3>
+                <div class="rooms">
+                    <button class="room-btn" data-room="14">14</button>
+                    <button class="room-btn" data-room="15">15</button>
+                    <button class="room-btn" data-room="16">16</button>
+                    <button class="room-btn" data-room="17">17</button>
+                    <button class="room-btn" data-room="18">18</button>
+                    <button class="room-btn" data-room="19">19</button>
+                    <button class="room-btn" data-room="20">20</button>
+                    <button class="room-btn" data-room="21">21</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-panel" id="roomInfo">
+            <h3 class="info-title">Habitación seleccionada: <span id="selectedRoom">-</span></h3>
+            <p>Esta habitación está disponible para reserva inmediata.</p>
+        </div>
+
+        <button class="action-btn" id="reserveBtn">Reservar Habitación</button>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const roomButtons = document.querySelectorAll('.room-btn:not(.unavailable)');
+            const infoPanel = document.getElementById('roomInfo');
+            const selectedRoomSpan = document.getElementById('selectedRoom');
+            const reserveBtn = document.getElementById('reserveBtn');
+
+            let selectedRoom = null; // Variable para almacenar la habitación seleccionada
+
+            roomButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Deselect all rooms
+                    roomButtons.forEach(btn => {
+                        btn.classList.remove('selected');
+                    });
+
+                    // Select this room
+                    this.classList.add('selected');
+
+                    // Update info panel
+                    selectedRoomSpan.textContent = this.dataset.room;
+                    infoPanel.classList.add('active');
+                    reserveBtn.classList.add('active');
+
+                    selectedRoom = this.dataset.room; // Guarda la habitación seleccionada
+                });
+            });
+
+            // Evento click para el botón "Reservar Habitación"
+            reserveBtn.addEventListener('click', function() {
+                if (selectedRoom) {
+                    //Redirige a la página de registro
+                    window.location.href = 'registro.html';
+                } else {
+                    alert('Por favor, selecciona una habitación primero.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

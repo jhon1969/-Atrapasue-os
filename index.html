@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATRAPASUEÑOS</title>
+    <link rel="stylesheet" href="style.css"> <!-- Enlace al archivo CSS externo -->
+</head>
+<body>
+    <h1>ATRAPASUEÑOS</h1>
+    <p>Vivienda Universitaria</p>
+    <p>Encuentra tu espacio en AtrapaSueños,<br> la vivienda universitaria ideal para estudiantes UIS</p>
+
+    <div class="button-container">
+        <button class="button">Administrador</button>
+        <button class="button" id="disponibilidadBtn">Disponibilidad</button>
+    </div>
+
+    <script>
+        document.getElementById('disponibilidadBtn').addEventListener('click', function() {
+        window.location.href = 'disponibilidad.html'; // Redirige a disponibilidad.html
+            console.log('¡Botón de Disponibilidad clickeado!');
+        });
+    </script>
+</body>
+</html>

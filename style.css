@@ -1,0 +1,57 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('fondo-atrapasuenos.jpg'); /* Reemplazar con la ruta de tu imagen */
+    background-size: contain;
+    background-size: 50% auto; /* Ancho al 50% del contenedor, alto automático */    
+    background-repeat: no-repeat; /* Para evitar que la imagen se repita */
+    background-position: center;
+    background-attachment: fixed; /* Para mantener la imagen fija al hacer scroll */
+    color: black; /* Color del texto para que sea legible sobre el fondo */
+    text-align: center; /* Centrar el contenido horizontalmente */
+    height: 100vh; /* Asegurar que el body ocupe toda la altura de la ventana */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrar el contenido verticalmente */
+    align-items: center; /* Centrar el contenido horizontalmente */
+}
+
+h1 {
+    font-size: 3em;
+    margin-bottom: 0.5em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    color: black; /* Color del texto a negro */
+}
+
+p {
+    font-size: 1.2em;
+    margin-bottom: 2em;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    color: black; /* Color del texto a negro */
+}
+
+.button-container {
+    display: flex; /* Alinear los botones horizontalmente */
+    justify-content: center; /* Centrar los botones */
+    gap: 20px; /* Espacio entre los botones */
+    margin-bottom: 2em;
+}
+
+.button {
+    background-color: #4CAF50; /* Color de fondo */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 25px; /* Puntas curvas */
+    transition: background-color 0.3s; /* Transición suave para el cambio de color */
+}
+
+.button:hover {
+    background-color: #3e8e41; /* Color de fondo al pasar el cursor */
+}
